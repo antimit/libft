@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: onosul <onosul@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/18 15:25:55 by onosul            #+#    #+#             */
+/*   Updated: 2024/09/18 15:32:30 by onosul           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 void	ft_strncpy(char *dest, char *src, size_t n)
@@ -12,7 +24,8 @@ void	ft_strncpy(char *dest, char *src, size_t n)
 	}
 	dest[i] = '\0';
 }
-int	IsInSet(char const *set, char c)
+
+int	isinset(char const *set, char c)
 {
 	size_t	i;
 
@@ -27,6 +40,7 @@ int	IsInSet(char const *set, char c)
 	}
 	return (0);
 }
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	start;
@@ -40,9 +54,9 @@ char	*ft_strtrim(char const *s1, char const *set)
 	}
 	start = 0;
 	end = strlen(s1);
-	while (s1[start] && IsInSet(set, s1[start]))
+	while (s1[start] && isinset(set, s1[start]))
 		start++;
-	while (end > start && IsInSet(set, s1[end - 1]))
+	while (end > start && isinset(set, s1[end - 1]))
 	{
 		end--;
 	}

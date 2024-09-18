@@ -1,15 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: onosul <onosul@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/18 14:35:10 by onosul            #+#    #+#             */
+/*   Updated: 2024/09/18 16:13:48 by onosul           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-int	isSpace(char c, char sep)
+int	is_space(char c, char sep)
 {
 	return (c == sep);
 }
+
 size_t	word_len(const char *str, char sep)
 {
 	size_t	i;
 
 	i = 0;
-	while (!isSpace(str[i], sep) && str[i])
+	while (!is_space(str[i], sep) && str[i])
 	{
 		i++;
 	}
@@ -25,15 +38,15 @@ size_t	count_words(const char *str, char sep)
 	i = 0;
 	while (str[i])
 	{
-		while (isSpace(str[i], sep) && str[i])
+		while (is_space(str[i], sep) && str[i])
 		{
 			i++;
 		}
-		if (!isSpace(str[i], sep) && str[i])
+		if (!is_space(str[i], sep) && str[i])
 		{
 			count++;
 		}
-		while (!isSpace(str[i], sep) && str[i])
+		while (!is_space(str[i], sep) && str[i])
 		{
 			i++;
 		}
@@ -79,14 +92,14 @@ char	**ft_split(const char *s, char c)
 	i = 0;
 	while (*str)
 	{
-		while (isSpace(*str, c) && *str)
+		while (is_space(*str, c) && *str)
 			str++;
-		if (*str && !isSpace(*str, c))
+		if (*str && !is_space(*str, c))
 		{
 			result[i] = ft_word(str, c);
 			i++;
 		}
-		while (!isSpace(*str, c) && *str)
+		while (!is_space(*str, c) && *str)
 			str++;
 	}
 	result[i] = NULL;
