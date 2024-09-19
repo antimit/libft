@@ -12,44 +12,40 @@
 
 #include "libft.h"
 
-int	is_space(char c, char sep)
+void	free_split(char **split, size_t i)
 {
-	return (c == sep);
+	while (i > 0)
+	{
+		free(split[i - 1]);
+		i--;
+	}
+	free(split);
 }
 
-size_t	word_len(const char *str, char sep)
+int	skip_chars(const char *str, int i, char sep, int mode)
 {
-	size_t	i;
-
-	i = 0;
-	while (!is_space(str[i], sep) && str[i])
-	{
-		i++;
-	}
+	if (mode == 0)
+		while (str[i] && str[i] == sep)
+			i++;
+	else
+		while (str[i] && str[i] != sep)
+			i++;
 	return (i);
 }
 
 size_t	count_words(const char *str, char sep)
 {
-	int		i;
 	size_t	count;
+	int		i;
 
 	count = 0;
 	i = 0;
 	while (str[i])
 	{
-		while (is_space(str[i], sep) && str[i])
-		{
-			i++;
-		}
-		if (!is_space(str[i], sep) && str[i])
-		{
+		i = skip_chars(str, i, sep, 0);
+		if (str[i] && str[i] != sep)
 			count++;
-		}
-		while (!is_space(str[i], sep) && str[i])
-		{
-			i++;
-		}
+		i = skip_chars(str, i, sep, 1);
 	}
 	return (count);
 }
@@ -62,12 +58,11 @@ char	*ft_word(const char *str, char sep)
 
 	i = 0;
 	len = 0;
-	len = word_len(str, sep);
+	while (str[len] && str[len] != sep)
+		len++;
 	result = (char *)malloc(len + 1);
 	if (!result)
-	{
 		return (NULL);
-	}
 	while (i < len)
 	{
 		result[i] = str[i];
@@ -79,49 +74,51 @@ char	*ft_word(const char *str, char sep)
 
 char	**ft_split(const char *s, char c)
 {
-	const char	*str;
-	size_t		len;
-	char		**result;
-	size_t		i;
+	char	**result;
+	size_t	i;
+	int		start;
 
+	i = 0;
+	start = 0;
 	if (!s)
 		return (NULL);
-	str = s;
-	len = count_words(str, c);
-	result = (char **)malloc((len + 1) * sizeof(char *));
-	i = 0;
-	while (*str)
+	result = (char **)malloc((count_words(s, c) + 1) * sizeof(char *));
+	if (!result)
+		return (NULL);
+	while (s[start])
 	{
-		while (is_space(*str, c) && *str)
-			str++;
-		if (*str && !is_space(*str, c))
+		start = skip_chars(s, start, c, 0);
+		if (s[start] && s[start] != c)
 		{
-			result[i] = ft_word(str, c);
+			result[i] = ft_word(s + start, c);
+			if (!result[i])
+				return (free_split(result, i), NULL);
 			i++;
 		}
-		while (!is_space(*str, c) && *str)
-			str++;
+		start = skip_chars(s, start, c, 1);
 	}
 	result[i] = NULL;
 	return (result);
 }
 
-// int	main(void)
-// {
-// 	char	**result;
-// 	char	sep;
-// 	char	*str;
-// 	int		i;
 
-// 	sep = ',';
-// 	str = "Hello,World HI";
-// 	result = ft_split(str, sep);
-// 	i = 0;
-// 	while (i < count_words(str, sep))
-// 	{
-// 		printf("%s", result[i]);
-// 		i++;
-// 	}
-// 	// printf("%s",result[0]);
-// 	return (0);
-// }
+
+int	main(void)
+{
+	char	**result;
+	char	sep;
+	char	*str;
+	int		i;
+
+	sep = ',';
+	str = "Hello,World HI";
+	result = ft_split(str, sep);
+	i = 0;
+	while (i < count_words(str, sep))
+	{
+		printf("%s\n", result[i]);
+		i++;
+	}
+	// printf("%s",result[0]);
+	return (0);
+}

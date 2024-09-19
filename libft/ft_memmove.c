@@ -20,48 +20,58 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 
 	p = (unsigned char *)src;
 	d = (unsigned char *)dest;
-	if (d == p)
-	{
+	if (d == p || n == 0)
 		return (dest);
-	}
-	i = 0;
-	while (i < n)
+	if (d > p)
 	{
-		d[i] = p[i];
-		i++;
+		while (n--)
+			d[n] = p[n];
+	}
+	else
+	{
+		i = 0;
+		while (i < n)
+		{
+			d[i] = p[i];
+			i++;
+		}
 	}
 	return (dest);
 }
 
-// void	ft_memmove_copy(unsigned char *dest, const unsigned char *src, size_t n)
+// int	main(void)
 // {
-// 	size_t	i;
+// 	int	n;
+// 	int	src[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+// 	int	i;
 
+// 	n = 10;
+// 	memmove(src + 2, src, 4 * sizeof(int));
 // 	i = 0;
 // 	while (i < n)
 // 	{
-// 		dest[i] = src[i];
+// 		printf("%d\n", src[i]);
 // 		i++;
 // 	}
 // }
 
 // void	*ft_memmove(void *dest, const void *src, size_t n)
 // {
-// 	unsigned char	*temp;
 // 	unsigned char	*p;
 // 	unsigned char	*d;
+// 	size_t			i;
 
-// 	if (!dest && !src)
-// 	{
-// 		return (NULL);
-// 	}
-// 	temp = (unsigned char *)malloc(n);
 // 	p = (unsigned char *)src;
 // 	d = (unsigned char *)dest;
-// 	if (d == p || n == 0)
+// 	if (d == p)
+// 	{
 // 		return (dest);
-// 	ft_memmove_copy(temp, p, n);
-// 	ft_memmove_copy(d, temp, n);
-// 	free(temp);
+// 	}
+// 	i = 0;
+// 	while (i < n)
+// 	{
+// 		d[i] = p[i];
+// 		i++;
+// 	}
 // 	return (dest);
 // }

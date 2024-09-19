@@ -53,7 +53,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	}
 	start = 0;
-	end = strlen(s1);
+	end = ft_strlen(s1);
 	while (s1[start] && isinset(set, s1[start]))
 		start++;
 	while (end > start && isinset(set, s1[end - 1]))
